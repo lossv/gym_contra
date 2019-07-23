@@ -1,12 +1,13 @@
 # gym_contra
-A gym game for Contra that for reinforcement learning
+A gym game for Contra that for reinforcement learning for Python3.6 or Later
 
 start with Src/ttt.py 
 
-install enviroment on Ubuntu
-
+Install enviroment on Ubuntu
+```
 pip3 install gym
 pip3 install nes-py
+```
 
 Random play
 ```
