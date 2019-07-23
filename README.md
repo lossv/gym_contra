@@ -18,7 +18,6 @@ The preferred installation of env is from git clone:
 ```
 git clone git@github.com:OuYanghaoyue/gym_contra.git
 ```
-<font color="#dd00dd">Contra-v0</font>
 
 # Usage
 ## Python
