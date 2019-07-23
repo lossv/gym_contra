@@ -1,0 +1,25 @@
+# gym_contra
+A gym game for Contra that for reinforcement learning
+start with Src/ttt.py 
+
+Also you can start random play by
+'''
+import gym
+from Src import nesgym
+
+env = gym.make('Contra-v0')
+
+obs = env.reset()
+
+print("Make done")
+
+print("action", env.action_space)
+env.render()
+print(env.observation_space)
+for step in range(100000):
+    env.render()
+    action = env.action_space.sample()
+    # print("action", env.action_space)
+    obs, reward, done, info = env.step(action)
+env.close()
+...
