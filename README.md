@@ -63,4 +63,58 @@ ContraEnv -m <`human` or `random`>
 ## Environments
 These environments allow 3 attempts (lives) to play in the game. The environments only send <font color="#FF69B4">reward-able game-play </font> frames to agents; No cut-scenes, loading screens, etc. are sent from the NES emulator to an <font color="#FF69B4">agent</font> nor can an agent perform actions during these instances. If a cut-scene is not able to be skipped by hacking the NES's RAM, the environment will lock the Python process until the emulator is ready for the next action.
 
+## Step
+> Info about the rewards and info returned by the step method.
+
+### Reward Function
+The reward function assumes the objective of the game is to move as far right as possible (increase the agent's x value), as fast as possible, without dying. To model this game, three separate variables compose the reward:
+
+1. v: the difference in agent x values between states
+- in this case this is instantaneous velocity for the given step
+- v = x1 - x0
+    - x0 is the x position before the step
+    - x1 is the x position after the step
+- moving right ⇔ v > 0
+- moving left ⇔ v < 0
+- not moving ⇔ v = 0
+
+2. d: a death penalty that penalizes the agent for dying in a state
+    - this penalty encourages the agent to avoid death
+    - alive ⇔ d = 0
+    - dead ⇔ d = -15
+3. b : if the agent defeated the boss 
+    - this reword will encourages the agent to defeat boss as possible
+    - no defeated ⇔ 0
+    - defeated ⇔ 30
+
+So the reward function is:
+
+<font color="#FF69B4">r = v + d + b</font>
+
+
+> Note:The reward is clipped into the range (-15, 15).
+
+## info dictionary
+The info dictionary returned by the step method contains the following keys:
+
+
 ```
+life=self._life,
+dead=self._is_dead,
+done=self._get_done,
+status=self._player_status,
+x_pos=self._x_position,
+y_pos=self._y_position,
+```
+x_pos	int	Mario's x position in the stage (from the left)
+y_pos	int	Mario's y position in the stage (from the bottom)
+
+Key  | Type | Description |
+---|--- | ---
+life | int | The number of lives left, i.e., {3, 2, 1}
+dead | Bool | Get The palyer is dead
+done | Bool | Get the game is game over
+status | Bool | Alive Status (00 - Dead, 01 - Alive, 02 - Dying)
+x_pos | int | Player's x position in the stage (from the left)
+y_pos |	int	| Player's y position in the stage (from the bottom)
+
