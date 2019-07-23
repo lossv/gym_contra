@@ -1,9 +1,15 @@
 # gym_contra
 A gym game for Contra that for reinforcement learning
+
 start with Src/ttt.py 
 
-Also you can start random play by
-'''
+install enviroment on Ubuntu
+
+pip3 install gym
+pip3 install nes-py
+
+Random play
+```
 import gym
 from Src import nesgym
 
@@ -22,4 +28,4 @@ for step in range(100000):
     # print("action", env.action_space)
     obs, reward, done, info = env.step(action)
 env.close()
-...
+```
