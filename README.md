@@ -1,7 +1,7 @@
 # gym_contra
 A gym game for Contra that for reinforcement learning for Python3.6 or Later
 
-start with Src/ttt.py 
+start random play with Src/ttt.py 
 
 ![image](https://github.com/OuYanghaoyue/gym_contra/blob/master/Img/TIM%E5%9B%BE%E7%89%8720190723143124.png)
 
@@ -14,22 +14,20 @@ pip3 install nes-py
 
 Random play
 ```
+from nes_py.wrappers import JoypadSpace
+from Src.Env.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT
 import gym
-from Src import nesgym
 
 env = gym.make('Contra-v0')
+env = JoypadSpace(env, COMPLEX_MOVEMENT)
 
-obs = env.reset()
 
-print("Make done")
-
-print("action", env.action_space)
-env.render()
-print(env.observation_space)
-for step in range(100000):
+done = True
+for step in range(5000):
+    if done:
+        state = env.reset()
+    state, reward, done, info = env.step(env.action_space.sample())
     env.render()
-    action = env.action_space.sample()
-    # print("action", env.action_space)
-    obs, reward, done, info = env.step(action)
+
 env.close()
 ```
