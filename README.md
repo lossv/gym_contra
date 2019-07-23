@@ -3,6 +3,9 @@ A gym game for Contra that for reinforcement learning for Python3.6 or Later
 
 start with Src/ttt.py 
 
+![image](https://github.com/OuYanghaoyue/gym_contra/blob/master/Img/TIM%E5%9B%BE%E7%89%8720190723143124.png)
+
+
 Install enviroment on Ubuntu
 ```
 pip3 install gym
