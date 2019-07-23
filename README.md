@@ -13,7 +13,7 @@ An [OpenAI](https://github.com/openai/gym) Gym environment for Contra.  on The N
 # Installation
 ---
 
-The preferred installation of env is from pip:
+The preferred installation of env is from git clone:
 
 ```
 git clone git@github.com:OuYanghaoyue/gym_contra.git
