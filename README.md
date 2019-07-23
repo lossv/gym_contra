@@ -97,15 +97,6 @@ So the reward function is:
 ## info dictionary
 The info dictionary returned by the step method contains the following keys:
 
-
-```
-life=self._life,
-dead=self._is_dead,
-done=self._get_done,
-status=self._player_status,
-x_pos=self._x_position,
-y_pos=self._y_position,
-```
 x_pos	int	Mario's x position in the stage (from the left)
 y_pos	int	Mario's y position in the stage (from the bottom)
 
