@@ -95,8 +95,6 @@ status=self._player_status,
 x_pos=self._x_position,
 y_pos=self._y_position,
 ```
-x_pos	int	Mario's x position in the stage (from the left)
-y_pos	int	Mario's y position in the stage (from the bottom)
 
 Key  | Type | Description |
 ---|--- | ---
