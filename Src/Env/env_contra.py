@@ -5,8 +5,6 @@ from nes_py import NESEnv
 
 from Src.ROMs import decode_target
 
-_STATUS_MAP = defaultdict(lambda: 'is_palying', {0: 'playing', 1: 'paused'})
-
 _STAGE_OVER_ENEMIES = np.array([0x2D, 0x31])
 _ENEMY_TYPE_ADDRESSES = [0x0016, 0x0017, 0x0018, 0x0019, 0x001A]
 
@@ -33,13 +31,14 @@ class ContraEnv(NESEnv):
 
         self._rom_path = './ROMs/contra.nes'
 
+        self._dead_count = 0
+
         # initialize the super object with the ROM path
         super(ContraEnv, self).__init__(self._rom_path)
         # set the target world, stage, and area variables
         target = decode_target(target, lost_levels)
         self._target_world, self._target_stage, self._target_area = target
-        # setup a variable to keep track of the last frames time
-        self._time_last = 0
+
         # setup a variable to keep track of the last frames x position
         self._x_position_last = 0
         # reset the emulator
@@ -53,8 +52,6 @@ class ContraEnv(NESEnv):
     @property
     def is_single_stage_env(self):
         """Return True if this environment is a stage environment."""
-        # print("self._target_world ", self._target_world)
-        # print("self._target_area ", self._target_area)
         return self._target_world is not None and self._target_area is not None
 
     def _read_mem_range(self, address, length):
@@ -92,23 +89,10 @@ class ContraEnv(NESEnv):
             if self.ram[0x002C] == 4:
                 break
 
-        print("self.ram[0x0025]", self._get_game_state)
-        # Press start until the game starts
-        while self._get_game_state != 0:
-            # press and release the start button
-            # print("0x0024", self.ram[0x0024])
-            print("111")
-            self._frame_advance(8)
-
-            print("self.ram[0x0038]", self.ram[0x0038])
-            # if we're in the single stage, environment, write the stage data
-
-            self._frame_advance(0)
-
     @property
     def _get_game_state(self):
         """0038 - Game Status (00 - playing, 01 - game over)"""
-        return self.ram[0x0025]
+        return self.ram[0x0038]
 
     @property
     def _life(self):
@@ -118,7 +102,6 @@ class ContraEnv(NESEnv):
     @property
     def _x_position(self):
         """Return the current horizontal position."""
-        # add the current page 0x6d to the current x
         return self.ram[0x0334]
 
     @property
@@ -131,11 +114,6 @@ class ContraEnv(NESEnv):
         """Return the current vertical position."""
         # check if Mario is above the viewport (the score board area)
         return 255 - self._y_pixel
-
-    @property
-    def _player_status(self):
-        """Return the player status as a string."""
-        return _STATUS_MAP[self.ram[0x0025]]
 
     @property
     def _player_state(self):
@@ -155,25 +133,18 @@ class ContraEnv(NESEnv):
     @property
     def _is_dead(self):
         """Return True if Mario is dead, False otherwise."""
+        if self._player_state == 0:
+            self._dead_count += 1
+            # print("Dead count", self._dead_count)
         return self._player_state == 0
 
     @property
     def _is_game_over(self):
         """Return True if the game has ended, False otherwise."""
-        # the life counter will get set to 255 (0xff) when there are no lives
-        # left. It goes 2, 1, 0 for the 3 lives of the game
-        return self._life == 0xff
-
-    # have to recode
-    def _kill_mario(self):
-        """Skip a death animation by forcing Mario to death."""
-        # force Mario's state to dead
-        self.ram[0x000e] = 0x06
-        # step forward one frame
-        self._frame_advance(0)
+        # get the game state Game Status (00 - playing, 01 - game over)
+        return self._get_game_state == 1
 
     # MARK: Reward Function
-
     @property
     def _x_reward(self):
         """Return the reward based on left right movement between steps."""
@@ -189,7 +160,6 @@ class ContraEnv(NESEnv):
 
         return _reward
 
-    # have to recode
     @property
     def _death_penalty(self):
         """Return the reward earned by dying."""
@@ -199,16 +169,15 @@ class ContraEnv(NESEnv):
         return 0
 
     # MARK: nes-py API calls
-    # have to recode
     def _will_reset(self):
         """Handle and RAM hacking before a reset occurs."""
-        self._time_last = 0
         self._x_position_last = 0
+        self._dead_count = 0
 
-    # have to recode
     def _did_reset(self):
         """Handle any RAM hacking after a reset occurs."""
         self._x_position_last = self._x_position
+        self._dead_count = 0
 
     # have to recode
     def _did_step(self, done):
@@ -228,11 +197,20 @@ class ContraEnv(NESEnv):
         # if mario is dying, then cut to the chase and kill hi,
         if self._is_dying:
             # self._kill_mario()
-            pass
+            self._frame_advance(0)
+            self._frame_advance(0)
+            self._frame_advance(0)
+            self._frame_advance(0)
+            self._frame_advance(0)
+            self._frame_advance(0)
+            self._frame_advance(0)
+        if self._is_game_over:
+            self._frame_advance(32)
+            self._frame_advance(8)
 
     def _get_reward(self):
         """Return the reward after a step occurs."""
-        return self._x_reward + self._death_penalty
+        return self._x_reward + self._death_penalty + self._get_boss_defeated_reward()
 
     @property
     def _get_boss_defeated(self):
@@ -248,19 +226,25 @@ class ContraEnv(NESEnv):
         """
         return self.ram[0x002C] == 8
 
-    # have to recode
+    def _get_boss_defeated_reward(self):
+        if self._get_boss_defeated:
+            return 30
+        return 0
+
     def _get_done(self):
         """Return True if the episode is over, False otherwise."""
-        if self.is_single_stage_env:
-            return self._is_dying or self._is_dead or self._get_boss_defeated
-        return self._is_game_over
+        if self._is_game_over or self._get_boss_defeated:
+            return True
+        return False
 
     # have to recode
     def _get_info(self):
         """Return the info after a step occurs"""
         return dict(
             life=self._life,
-            status=self._player_status,
+            dead=self._is_dead,
+            done=self._get_done,
+            status=self._player_state,
             x_pos=self._x_position,
             y_pos=self._y_position,
         )
