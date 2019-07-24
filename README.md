@@ -1,24 +1,16 @@
-# gym_contra
-A gym game for Contra that for reinforcement learning for Python3.6 or Later
-
-start random play with Src/ttt.py 
-
-![image](https://github.com/OuYanghaoyue/gym_contra/blob/master/Img/TIM%E5%9B%BE%E7%89%8720190723143124.png)
-
-
 # Gym for Contra
+
+![image](https://haoyue.xyz/2019/07/24/5d380b686b1ca.png)
 
 An [OpenAI](https://github.com/openai/gym) Gym environment for Contra.  on The Nintendo Entertainment System (NES) using the [nes-py emulator](https://github.com/Kautenja/nes-py).
 
+[项目地址](https://github.com/OuYanghaoyue/gym_contra)
+
 # Installation
----
-
-The preferred installation of env is from git clone:
-
+The preferred installation of gym-super-mario-bros is from pip:
 ```
 git clone git@github.com:OuYanghaoyue/gym_contra.git
 ```
-
 # Usage
 ## Python
 You must import <font color="#dd00dd">ContraEnv</font> before trying to make an environment. This is because gym environments are registered at runtime. By default, <font color="#dd00dd">ContraEnv</font> use the full NES action space of 256 discrete actions. To contstrain this, <font color="#dd00dd">ContraEnv</font>.actions provides three actions lists (RIGHT_ONLY, SIMPLE_MOVEMENT, and COMPLEX_MOVEMENT) for the nes_py.wrappers.JoypadSpace wrapper. See [Env/actions.py](https://github.com/OuYanghaoyue/gym_contra/blob/master/Src/Env/actions.py) for a breakdown of the legal actions in each of these three lists.
@@ -26,17 +18,21 @@ You must import <font color="#dd00dd">ContraEnv</font> before trying to make an 
 
 ```
 from nes_py.wrappers import JoypadSpace
-from Src.Env.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT
+from Src.Env.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT, RIGHT_ONLY
 import gym
 
 env = gym.make('Contra-v0')
-env = JoypadSpace(env, COMPLEX_MOVEMENT)
+env = JoypadSpace(env, RIGHT_ONLY)
 
+print("action", env.action_space)
+print(env.observation_space)
 
-done = True
+done = False
+env.reset()
 for step in range(5000):
     if done:
-        state = env.reset()
+        print("Over")
+        break
     state, reward, done, info = env.step(env.action_space.sample())
     env.render()
 
@@ -49,13 +45,7 @@ env.close()
 > NOTE: remove calls to render in training code for a nontrivial speedup.
 
 ## Command Line
-<font color="#dd00dd">ContraEnv</font> features a command line interface for playing environments using either the keyboard, or uniform random movement.
-
-
-```
-ContraEnv -m <`human` or `random`>
-```
-<font color="#FF69B4"> </font>
+<font color="#dd00dd">prepare to write please wait</font>
 
 > NOTE: by default,-m is set to human.
 
@@ -96,6 +86,15 @@ So the reward function is:
 ## info dictionary
 The info dictionary returned by the step method contains the following keys:
 
+
+```
+life=self._life,
+dead=self._is_dead,
+done=self._get_done,
+status=self._player_status,
+x_pos=self._x_position,
+y_pos=self._y_position,
+```
 x_pos	int	Mario's x position in the stage (from the left)
 y_pos	int	Mario's y position in the stage (from the bottom)
 
@@ -107,4 +106,3 @@ done | Bool | Get the game is game over
 status | Bool | Alive Status (00 - Dead, 01 - Alive, 02 - Dying)
 x_pos | int | Player's x position in the stage (from the left)
 y_pos |	int	| Player's y position in the stage (from the bottom)
-
