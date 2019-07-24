@@ -5,6 +5,9 @@ import gym
 env = gym.make('Contra-v0')
 env = JoypadSpace(env, RIGHT_ONLY)
 
+print("action", env.action_space)
+print(env.observation_space)
+
 done = False
 env.reset()
 for step in range(5000):
