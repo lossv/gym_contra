@@ -112,7 +112,7 @@ class ContraEnv(NESEnv):
     @property
     def _y_position(self):
         """Return the current vertical position."""
-        # check if Mario is above the viewport (the score board area)
+        # check if player's is above the viewport (the score board area)
         return 255 - self._y_pixel
 
     @property
@@ -194,9 +194,8 @@ class ContraEnv(NESEnv):
         # if done flag is set a reset is incoming anyway, ignore any hacking
         if done:
             return
-        # if mario is dying, then cut to the chase and kill hi,
+        # if players is dying, then cut to the chase and kill hi,
         if self._is_dying:
-            # self._kill_mario()
             self._frame_advance(0)
             self._frame_advance(0)
             self._frame_advance(0)
@@ -237,7 +236,6 @@ class ContraEnv(NESEnv):
             return True
         return False
 
-    # have to recode
     def _get_info(self):
         """Return the info after a step occurs"""
         return dict(
