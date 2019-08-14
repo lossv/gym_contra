@@ -1,10 +1,10 @@
 # Gym for Contra
 
-![image](https://haoyue.xyz/2019/07/24/5d380b686b1ca.png)
+![image](https://github.com/OuYanghaoyue/gym_contra/blob/master/Img/TIM%E5%9B%BE%E7%89%8720190724144924.png)
 
 An [OpenAI](https://github.com/openai/gym) Gym environment for Contra.  on The Nintendo Entertainment System (NES) using the [nes-py emulator](https://github.com/Kautenja/nes-py).
 
-[项目地址](https://github.com/OuYanghaoyue/gym_contra)
+[Project address](https://github.com/OuYanghaoyue/gym_contra)
 
 # Installation
 The preferred installation of gym-super-mario-bros is from pip:
