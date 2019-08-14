@@ -10,6 +10,12 @@ An [OpenAI](https://github.com/openai/gym) Gym environment for Contra.  on The N
 The preferred installation of gym-super-mario-bros is from git clone:
 ```
 git clone git@github.com:OuYanghaoyue/gym_contra.git
+
+pip install -r requirements.txt
+
+or
+
+pip3 install -r requirements.txt
 ```
 # Usage
 ## Python
