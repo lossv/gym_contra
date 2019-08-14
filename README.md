@@ -7,7 +7,7 @@ An [OpenAI](https://github.com/openai/gym) Gym environment for Contra.  on The N
 [Project address](https://github.com/OuYanghaoyue/gym_contra)
 
 # Installation
-The preferred installation of gym-super-mario-bros is from pip:
+The preferred installation of gym-super-mario-bros is from git clone:
 ```
 git clone git@github.com:OuYanghaoyue/gym_contra.git
 ```
@@ -18,14 +18,14 @@ You must import <font color="#dd00dd">ContraEnv</font> before trying to make an 
 
 ```
 from nes_py.wrappers import JoypadSpace
-from Src.Env.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT, RIGHT_ONLY
 import gym
+from Contra.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT, RIGHT_ONLY
 
 env = gym.make('Contra-v0')
 env = JoypadSpace(env, RIGHT_ONLY)
 
-print("action", env.action_space)
-print(env.observation_space)
+print("actions", env.action_space)
+print("observation_space ", env.observation_space.shape[0])
 
 done = False
 env.reset()
