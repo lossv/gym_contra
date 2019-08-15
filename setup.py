@@ -1,16 +1,15 @@
 """The setup script for installing the package."""
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Extension
+from distutils.core import setup, Extension
 
 # read the contents of the README
 with open('README.md') as README_md:
     README = README_md.read()
 
 setup(
-    name='gym_Contra',
-    version='0.1',
+    name='gym_contra',
+    version='0.0.5',
     description='Contra. for OpenAI Gym',
-    long_description=README,
-    long_description_content_type='text/markdown',
     keywords=' '.join([
         'OpenAI-Gym',
         'NES',
@@ -35,6 +34,8 @@ setup(
     url='https://github.com/OuYanghaoyue/gym_contra',
     author='OuYanghaoyue',
     author_email='tony1480087241@gmail.com',
+    long_description=README,
+    long_description_content_type="text/markdown",
     license='Proprietary',
     packages=find_packages(exclude=['tests', '*.tests', '*.tests.*']),
     package_data={'Contra': ['ROMs/*.nes']},

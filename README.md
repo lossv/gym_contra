@@ -1,31 +1,31 @@
 # Gym for Contra
 
-![image](https://github.com/OuYanghaoyue/gym_contra/blob/master/Img/TIM%E5%9B%BE%E7%89%8720190724144924.png)
+![image](https://haoyue.xyz/2019/07/24/5d380b686b1ca.png)
 
 An [OpenAI](https://github.com/openai/gym) Gym environment for Contra.  on The Nintendo Entertainment System (NES) using the [nes-py emulator](https://github.com/Kautenja/nes-py).
 
 [Project address](https://github.com/OuYanghaoyue/gym_contra)
 
 # Installation
-The preferred installation of gym-super-mario-bros is from pip:
-```
-git clone git@github.com:OuYanghaoyue/gym_contra.git
+The preferred installation of Contra is from pip:
+```shell
+pip install gym-contra
 ```
 # Usage
 ## Python
-You must import <font color="#dd00dd">ContraEnv</font> before trying to make an environment. This is because gym environments are registered at runtime. By default, <font color="#dd00dd">ContraEnv</font> use the full NES action space of 256 discrete actions. To contstrain this, <font color="#dd00dd">ContraEnv</font>.actions provides three actions lists (RIGHT_ONLY, SIMPLE_MOVEMENT, and COMPLEX_MOVEMENT) for the nes_py.wrappers.JoypadSpace wrapper. See [Env/actions.py](https://github.com/OuYanghaoyue/gym_contra/blob/master/Src/Env/actions.py) for a breakdown of the legal actions in each of these three lists.
+You must import ContraEnv before trying to make an environment. This is because gym environments are registered at runtime. By default, ContraEnv use the full NES action space of 256 discrete actions. To contstrain this,ContraEnv.actions provides three actions lists (RIGHT_ONLY, SIMPLE_MOVEMENT, and COMPLEX_MOVEMENT) for the nes_py.wrappers.JoypadSpace wrapper. See [Contra/actions.py](https://github.com/OuYanghaoyue/gym_contra/blob/master/Contra/actions.py) for a breakdown of the legal actions in each of these three lists.
 
 
-```
+```Python
 from nes_py.wrappers import JoypadSpace
-from Src.Env.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT, RIGHT_ONLY
 import gym
+from Contra.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT, RIGHT_ONLY
 
 env = gym.make('Contra-v0')
 env = JoypadSpace(env, RIGHT_ONLY)
 
-print("action", env.action_space)
-print(env.observation_space)
+print("actions", env.action_space)
+print("observation_space ", env.observation_space.shape[0])
 
 done = False
 env.reset()
@@ -37,7 +37,6 @@ for step in range(5000):
     env.render()
 
 env.close()
-
 ```
 
 > NOTE: ContraEnv.make is just an alias to gym.make for convenience.
@@ -45,12 +44,12 @@ env.close()
 > NOTE: remove calls to render in training code for a nontrivial speedup.
 
 ## Command Line
-<font color="#dd00dd">prepare to write please wait</font>
+Prepare to write please wait
 
 > NOTE: by default,-m is set to human.
 
 ## Environments
-These environments allow 3 attempts (lives) to play in the game. The environments only send <font color="#FF69B4">reward-able game-play </font> frames to agents; No cut-scenes, loading screens, etc. are sent from the NES emulator to an <font color="#FF69B4">agent</font> nor can an agent perform actions during these instances. If a cut-scene is not able to be skipped by hacking the NES's RAM, the environment will lock the Python process until the emulator is ready for the next action.
+These environments allow 3 attempts (lives) to play in the game. The environments only send reward-able game-play frames to agents; No cut-scenes, loading screens, etc. are sent from the NES emulator to an agent nor can an agent perform actions during these instances. If a cut-scene is not able to be skipped by hacking the NES's RAM, the environment will lock the Python process until the emulator is ready for the next action.
 
 ## Step
 > Info about the rewards and info returned by the step method.
@@ -78,7 +77,7 @@ The reward function assumes the objective of the game is to move as far right as
 
 So the reward function is:
 
-<font color="#FF69B4">r = v + d + b</font>
+r = v + d + b
 
 
 > Note:The reward is clipped into the range (-15, 15).

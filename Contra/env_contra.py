@@ -1,7 +1,7 @@
 """An OpenAI Gym interface to the NES game <TODO: Contra>"""
 import numpy as np
 from nes_py import NESEnv
-
+import os
 from Contra.ROMs.decode_target import decode_target
 
 _STAGE_OVER_ENEMIES = np.array([0x2D, 0x31])
@@ -28,7 +28,9 @@ class ContraEnv(NESEnv):
 
         """
         # The .nes file path name abso
-        self._rom_path = 'Contra/ROMs/contra.nes'
+        self._abs_path = os.getcwd()
+        self._rom_name = '/ROMs/contra.nes'
+        self._rom_path = self._abs_path + self._rom_name
         self._dead_count = 0
 
         # initialize the super object with the ROM path
