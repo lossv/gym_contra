@@ -7,15 +7,13 @@ An [OpenAI](https://github.com/openai/gym) Gym environment for Contra.  on The N
 [Project address](https://github.com/OuYanghaoyue/gym_contra)
 
 # Installation
-The preferred installation of gym-super-mario-bros is from git clone:
-```
-git clone git@github.com:OuYanghaoyue/gym_contra.git
-
-pip install -r requirements.txt
+The preferred installation of gym-contra is from pip:
+```shell
+pip install gym-contra
 
 or
 
-pip3 install -r requirements.txt
+pip3 install gym-contra
 ```
 # Usage
 ## Python
