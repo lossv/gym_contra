@@ -8,7 +8,7 @@ with open('README.md') as README_md:
 
 setup(
     name='gym_contra',
-    version='0.0.5',
+    version='0.0.6',
     description='Contra. for OpenAI Gym',
     keywords=' '.join([
         'OpenAI-Gym',
@@ -34,6 +34,7 @@ setup(
     url='https://github.com/OuYanghaoyue/gym_contra',
     author='OuYanghaoyue',
     author_email='tony1480087241@gmail.com',
+
     long_description=README,
     long_description_content_type="text/markdown",
     license='Proprietary',

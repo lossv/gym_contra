@@ -3,6 +3,7 @@ import numpy as np
 from nes_py import NESEnv
 import os
 from Contra.ROMs.decode_target import decode_target
+from Contra.ROMs.rom_path import rom_path
 
 _STAGE_OVER_ENEMIES = np.array([0x2D, 0x31])
 _ENEMY_TYPE_ADDRESSES = [0x0016, 0x0017, 0x0018, 0x0019, 0x001A]
@@ -15,7 +16,7 @@ class ContraEnv(NESEnv):
 
     def __init__(self, lost_levels=False, target=None):
         """
-        Initialize a new Super Mario Bros environment.
+        Initialize a new Contra environment.
 
         Args:
             lost_levels (bool): whether to load the ROM with lost levels.
@@ -28,9 +29,7 @@ class ContraEnv(NESEnv):
 
         """
         # The .nes file path name abso
-        self._abs_path = os.getcwd()
-        self._rom_name = '/ROMs/contra.nes'
-        self._rom_path = self._abs_path + self._rom_name
+        self._rom_path = rom_path()
         self._dead_count = 0
 
         # initialize the super object with the ROM path
