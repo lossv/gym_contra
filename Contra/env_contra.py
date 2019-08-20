@@ -210,7 +210,7 @@ class ContraEnv(NESEnv):
 
     def _get_reward(self):
         """Return the reward after a step occurs."""
-        return self._x_reward + self._death_penalty + self._get_boss_defeated_reward()
+        return self._x_reward + self._death_penalty + self._get_boss_defeated_reward() + self._score()
 
     @property
     def _get_boss_defeated(self):
@@ -231,11 +231,11 @@ class ContraEnv(NESEnv):
         # time_current = time.time()
         # get = time_current - self._time_start
         # print("Get ", get)
-        return self._read_mem_range(0x07E0, 6) % 20000000
+        return int((self._read_mem_range(0x07E0, 6) % 20000000) / 1000)
 
     def _get_boss_defeated_reward(self):
         if self._get_boss_defeated:
-            return 30
+            return 40
         return 0
 
     def _get_done(self):
