@@ -9,12 +9,17 @@ print("actions", env.action_space)
 print("observation_space ", env.observation_space.shape[0])
 
 done = False
-env.reset()
+a = env.reset()
+print("a ", a)
 for step in range(5000):
     if done:
         print("Over")
         break
     state, reward, done, info = env.step(env.action_space.sample())
+    # print("state ", state)
+    # print("reward ", reward)
+    # print("Done ", done)
+    print("score ", info['score'])
     env.render()
 
 env.close()

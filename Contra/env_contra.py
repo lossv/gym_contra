@@ -1,7 +1,7 @@
 """An OpenAI Gym interface to the NES game <TODO: Contra>"""
 import numpy as np
 from nes_py import NESEnv
-import os
+import time
 from Contra.ROMs.decode_target import decode_target
 from Contra.ROMs.rom_path import rom_path
 
@@ -31,6 +31,8 @@ class ContraEnv(NESEnv):
         # The .nes file path name abso
         self._rom_path = rom_path()
         self._dead_count = 0
+
+        # self._time_start = time.time()
 
         # initialize the super object with the ROM path
         super(ContraEnv, self).__init__(self._rom_path)
@@ -224,6 +226,13 @@ class ContraEnv(NESEnv):
         """
         return self.ram[0x002C] == 8
 
+    def _score(self):
+        """Return the current player score (0 to 999990).Base play time"""
+        # time_current = time.time()
+        # get = time_current - self._time_start
+        # print("Get ", get)
+        return self._read_mem_range(0x07E0, 6) % 20000000
+
     def _get_boss_defeated_reward(self):
         if self._get_boss_defeated:
             return 30
@@ -237,10 +246,12 @@ class ContraEnv(NESEnv):
 
     def _get_info(self):
         """Return the info after a step occurs"""
+        print("Score", self._score())
         return dict(
             life=self._life,
             dead=self._is_dead,
-            done=self._get_done,
+            done=self._get_done(),
+            score=self._score(),
             status=self._player_state,
             x_pos=self._x_position,
             y_pos=self._y_position,
