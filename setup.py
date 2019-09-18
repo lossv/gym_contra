@@ -8,7 +8,7 @@ with open('README.md') as README_md:
 
 setup(
     name='gym_contra',
-    version='0.0.7',
+    version='0.1.0',
     description='Contra. for OpenAI Gym',
     keywords=' '.join([
         'OpenAI-Gym',
@@ -24,7 +24,6 @@ setup(
         'Operating System :: MacOS :: MacOS X',
         'Operating System :: POSIX :: Linux',
         'Operating System :: Microsoft :: Windows',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',

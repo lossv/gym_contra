@@ -232,7 +232,7 @@ class ContraEnv(NESEnv):
         # get = time_current - self._time_start
         # print("Get ", get)
         return int((self._read_mem_range(0x07E0, 6) % 20000000) / 1000)
-
+    @property
     def _get_boss_defeated_reward(self):
         if self._get_boss_defeated:
             return 40
@@ -255,6 +255,7 @@ class ContraEnv(NESEnv):
             status=self._player_state,
             x_pos=self._x_position,
             y_pos=self._y_position,
+            defeated=self._get_boss_defeated
         )
 
 

@@ -3,12 +3,19 @@
 
 # actions for the simple run right environment
 RIGHT_ONLY = [
-    ['NOOP'],
     ['right'],
     ['right', 'A'],
     ['right', 'B'],
     ['right', 'A', 'B'],
 ]
+
+# RIGHT_ONLY = [
+#     ['NOOP', 'A'],
+#     # ['right'],
+#     ['right', 'A'],
+#     # ['right', 'B'],
+#     ['right', 'A', 'B'],
+# ]
 
 
 # actions for very simple movement

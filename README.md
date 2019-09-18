@@ -86,13 +86,15 @@ r = v + d + b
 The info dictionary returned by the step method contains the following keys:
 
 
-```
+```Python
 life=self._life,
 dead=self._is_dead,
-done=self._get_done,
-status=self._player_status,
+done=self._get_done(),
+score=self._score(),
+status=self._player_state,
 x_pos=self._x_position,
-y_pos=self._y_position,
+y_pos=self._y_position,defeated=self._get_boss_defeated,
+
 ```
 
 Key  | Type | Description |
@@ -100,6 +102,8 @@ Key  | Type | Description |
 life | int | The number of lives left, i.e., {3, 2, 1}
 dead | Bool | Get The palyer is dead
 done | Bool | Get the game is game over
+score | int | Get the player's score
 status | Bool | Alive Status (00 - Dead, 01 - Alive, 02 - Dying)
 x_pos | int | Player's x position in the stage (from the left)
 y_pos |	int	| Player's y position in the stage (from the bottom)
+defeated | Bool| self._get_boss_defeated
