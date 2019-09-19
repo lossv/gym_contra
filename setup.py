@@ -8,7 +8,7 @@ with open('README.md') as README_md:
 
 setup(
     name='gym_contra',
-    version='0.1.0',
+    version='0.1.1',
     description='Contra. for OpenAI Gym',
     keywords=' '.join([
         'OpenAI-Gym',
